@@ -91,16 +91,16 @@ class MailChimpMember extends MailChimpEntity
     public function getValidationRules(): array
     {
         return [
-            'emailaddress' => 'required|string',
+            'email_address' => 'required|email',
             'status' => 'required|string',
             'mailchimp_id' => 'nullable|string',
         ];
     }
 
     /**
-     * Set emailAddress.
+     * Set emailaddress.
      *
-     * @param string $emailAddress
+     * @param string $emailaddress
      *
      * @return MailChimpMember
      */
