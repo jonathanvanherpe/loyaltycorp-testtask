@@ -51,9 +51,12 @@ class MembersController extends Controller
             );
         }
 
-        $members = $list->getMailChimpMembers();
-
-        return $this->successfulResponse($members->toArray());
+        $members = $this->_getMembersByList($list);
+        $response = [];
+        foreach($members as $member){
+            $response[] = $member->toArray();
+        }
+        return $this->successfulResponse($response);
     }
 
     /**
@@ -84,18 +87,31 @@ class MembersController extends Controller
         /** @var \App\Database\Entities\MailChimp\MailChimpList|null $list */
         $list = $this->entityManager->getRepository(MailChimpList::class)->find($listId);
 
+
         try {
             // Save member into db
             $this->saveEntity($member);
             // Save member into MailChimp
             $response = $this->mailChimp->post('/lists/'.$list->getMailChimpId().'/members', $member->toMailChimpArray());
+            // assign member to list
+            $member->setMailChimpList($list);
             // Set MailChimp id on the member and save member into db
             $this->saveEntity($member->setMailChimpId($response->get('id')));
+
         } catch (Exception $exception) {
             // Return error response if something goes wrong
             return $this->errorResponse(['message' => $exception->getMessage()]);
         }
 
         return $this->successfulResponse($member->toArray());
+    }
+
+
+
+    public function _getMembersByList(MailChimpList $mailChimpList)
+    {
+        /** @var \App\Database\Entities\MailChimp\MailChimpList|null $list */
+        $members = $this->entityManager->getRepository(MailChimpMember::class)->findBy(['mailChimpList'=>$mailChimpList->getId()]);
+        return $members;
     }
 }

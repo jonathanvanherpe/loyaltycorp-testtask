@@ -43,7 +43,7 @@ class MailChimpMember extends MailChimpEntity
     private $mailChimpId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MailChimpList", inversedBy="mailChimpMembers")
+     * @ORM\ManyToOne(targetEntity="MailChimpList",inversedBy="mailChimpMembers")
      *
      * @ORM\JoinColumn(name="mail_chimp_list_id", referencedColumnName="id")
      */
@@ -81,6 +81,21 @@ class MailChimpMember extends MailChimpEntity
         $this->mailChimpId = $mailChimpId;
 
         return $this;
+    }
+
+    /**
+     * Link MailChimpList to MailChimpMember
+     *
+     * @param MailChimpList $mailChimpList
+     *
+     * @return \App\Database\Entities\MailChimp\MailChimpMember
+     */
+
+    public function setMailChimpList(MailChimpList $mailChimpList): MailChimpList
+    {
+        $this->mailChimpList = $mailChimpList;
+
+        return $this->mailChimpList;
     }
 
     /**

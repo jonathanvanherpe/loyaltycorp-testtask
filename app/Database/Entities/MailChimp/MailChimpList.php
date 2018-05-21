@@ -93,7 +93,7 @@ class MailChimpList extends MailChimpEntity
     private $visibility;
 
     /**
-     * @ORM\OneToMany(targetEntity="MailChimpMember", mappedBy="mailChimpList")
+     * @ORM\OneToMany(targetEntity="MailChimpMember",mappedBy="mailChimpList")
      */
     private $mailChimpMembers;
 
@@ -117,13 +117,6 @@ class MailChimpList extends MailChimpEntity
         return $this->mailChimpId;
     }
 
-    /**
-     * @return PersistentCollection|MailChimpMember[]
-     */
-    public function getMailChimpMembers(): PersistentCollection
-    {
-        return $this->mailChimpMembers;
-    }
 
     /**
      * Get validation rules for mailchimp entity.
