@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Database\Entities\MailChimp;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use EoneoPay\Utils\Str;
 
 /**
@@ -91,6 +93,11 @@ class MailChimpList extends MailChimpEntity
     private $visibility;
 
     /**
+     * @ORM\OneToMany(targetEntity="MailChimpMember", mappedBy="mailChimpList")
+     */
+    private $mailChimpMembers;
+
+    /**
      * Get id.
      *
      * @return null|string
@@ -108,6 +115,14 @@ class MailChimpList extends MailChimpEntity
     public function getMailChimpId(): ?string
     {
         return $this->mailChimpId;
+    }
+
+    /**
+     * @return PersistentCollection|MailChimpMember[]
+     */
+    public function getMailChimpMembers(): PersistentCollection
+    {
+        return $this->mailChimpMembers;
     }
 
     /**

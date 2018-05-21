@@ -43,7 +43,7 @@ class MailChimpMember extends MailChimpEntity
     private $mailChimpId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MailChimpList")
+     * @ORM\ManyToOne(targetEntity="MailChimpList", inversedBy="mailChimpMembers")
      *
      * @ORM\JoinColumn(name="mail_chimp_list_id", referencedColumnName="id")
      */
